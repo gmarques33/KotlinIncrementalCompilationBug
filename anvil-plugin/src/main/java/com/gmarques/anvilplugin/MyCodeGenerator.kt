@@ -6,10 +6,7 @@ import com.squareup.anvil.compiler.api.AnvilContext
 import com.squareup.anvil.compiler.api.CodeGenerator
 import com.squareup.anvil.compiler.api.GeneratedFile
 import com.squareup.anvil.compiler.api.createGeneratedFile
-import com.squareup.anvil.compiler.internal.classesAndInnerClass
-import com.squareup.anvil.compiler.internal.getKtClassOrObjectOrNull
-import com.squareup.anvil.compiler.internal.requireFqName
-import com.squareup.anvil.compiler.internal.requireTypeReference
+import com.squareup.anvil.compiler.internal.reference.classAndInnerClassReferences
 import org.jetbrains.kotlin.descriptors.ModuleDescriptor
 import org.jetbrains.kotlin.psi.KtFile
 import java.io.File
@@ -27,20 +24,13 @@ class MyCodeGenerator : CodeGenerator {
 
 
         return projectFiles
-            .classesAndInnerClass(module)
-            .filter { it.name == "MyClass" }
+            .classAndInnerClassReferences(module)
+            .filter { it.fqName.asString() == "com.gmarques.incremental.MyClass" }
             .map { myClass ->
                 val typeReference =
-                    myClass.primaryConstructor!!.valueParameters.first()
-                        .requireTypeReference(module)
+                    myClass.constructors.first().parameters.first().type().asTypeName()
 
-                val fqName =
-                    typeReference.requireFqName(module)
-
-                val ktClass =
-                    module.getKtClassOrObjectOrNull(fqName)
-
-                if (ktClass == null) {
+                if (typeReference == null) {
                     throw Exception("Should not be null!")
                 }
 
@@ -50,7 +40,7 @@ class MyCodeGenerator : CodeGenerator {
                     fileName = "MyGeneratedClass.kt",
                     content = """
                         package com.gmarques.incremental
-                        
+
                         class MyGeneratedClass { }
                     """.trimIndent()
                 )

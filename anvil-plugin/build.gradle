@@ -10,8 +10,8 @@ java {
 }
 
 dependencies {
-    api "com.squareup.anvil:compiler-api:2.3.11-1-6-10"
-    api "com.squareup.anvil:compiler-utils:2.3.11-1-6-10"
+    api "com.squareup.anvil:compiler-api:2.4.0-M1"
+    api "com.squareup.anvil:compiler-utils:2.4.0-M1"
 
     compileOnly "com.google.auto.service:auto-service-annotations:1.0"
     kapt "com.google.auto.service:auto-service:1.0"
