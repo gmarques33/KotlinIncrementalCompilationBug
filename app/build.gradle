@@ -1,28 +1,12 @@
 plugins {
-    id 'com.android.application'
-    id 'org.jetbrains.kotlin.android'
+    id 'java-library'
+    id 'org.jetbrains.kotlin.jvm'
     id 'com.squareup.anvil'
 }
 
-android {
-    namespace 'com.gmarques.incremental'
-    compileSdk 32
-
-    defaultConfig {
-        applicationId "com.gmarques.incremental"
-        minSdk 24
-        targetSdk 32
-        versionCode 1
-        versionName "1.0"
-    }
-
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_11
-        targetCompatibility JavaVersion.VERSION_11
-    }
-    kotlinOptions {
-        jvmTarget = '11'
-    }
+java {
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
 }
 
 dependencies {
