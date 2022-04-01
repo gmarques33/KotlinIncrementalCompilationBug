@@ -22,28 +22,14 @@ class MyCodeGenerator : CodeGenerator {
         projectFiles: Collection<KtFile>,
     ): Collection<GeneratedFile> {
 
-
         return projectFiles
             .classAndInnerClassReferences(module)
-            .filter { it.fqName.asString() == "com.gmarques.incremental.MyClass" }
-            .map { myClass ->
-                val typeReference =
-                    myClass.constructors.first().parameters.first().type().asTypeName()
+            //.filter { it.shortName == "ClassB" }
+            .mapNotNull { myClass ->
 
-                if (typeReference == null) {
-                    throw Exception("Should not be null!")
-                }
+                val directSuperClassReferences = myClass.directSuperClassReferences()
 
-                createGeneratedFile(
-                    codeGenDir = codeGenDir,
-                    packageName = "com.gmarques.incremental",
-                    fileName = "MyGeneratedClass.kt",
-                    content = """
-                        package com.gmarques.incremental
-
-                        class MyGeneratedClass { }
-                    """.trimIndent()
-                )
+                null
             }.toList()
 
     }

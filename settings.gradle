@@ -12,6 +12,5 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
-rootProject.name = "Incremental Compiler Bug"
-include ':app'
+rootProject.name = "Stack overflow Bug"
 include ':anvil-plugin'
