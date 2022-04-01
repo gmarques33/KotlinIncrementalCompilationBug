@@ -24,7 +24,7 @@ class MyCodeGenerator : CodeGenerator {
 
         return projectFiles
             .classAndInnerClassReferences(module)
-            //.filter { it.shortName == "ClassB" }
+            .filter { it.shortName == "ClassB" }
             .mapNotNull { myClass ->
 
                 val directSuperClassReferences = myClass.directSuperClassReferences()
